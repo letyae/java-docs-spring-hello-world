@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy WAR app to Azure Web App - AppJavaTest
+name: Build and deploy JAR app to Azure Web App - AppJavaTest
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: '8'
           distribution: 'microsoft'
 
       - name: Build with Maven
@@ -29,7 +29,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.war'
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: windows-latest
@@ -49,9 +49,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DDDCF9E1B9914534B360EDC4DAC365AB }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_7AEBB53A89DC4A7FA043DF9D2204D060 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_96C3B474C69B4E10BF61A2A816CB9F6B }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_EF6035A7453C4456A94B17F7737E5955 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_226C74EB99D3464788FE930694207FFC }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_205E05BB178F404185B7436FEFC06666 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -59,5 +59,5 @@ jobs:
         with:
           app-name: 'AppJavaTest'
           slot-name: 'Production'
-          package: '*.war'
+          package: '*.jar'
           
